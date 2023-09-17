@@ -2,7 +2,7 @@ package P03_STACKS_QUEUES.EXERCISES;
 
 import java.util.*;
 
-public class P04_BasicQueueOperations {
+public class T04_BasicQueueOperations {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
