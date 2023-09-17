@@ -19,7 +19,7 @@ public class T06_RecursiveFibonacci {
     public static long fibonacci (int n) {
 
         if (n < 2) {
-            return 1;
+            return 2;
         }
         if (memory[n] != 0) {
             return memory[n];
