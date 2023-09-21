@@ -12,23 +12,17 @@ public class T07_FindTheRealQueen {
             matrix[r] = scanner.nextLine().replace(" ", "").toCharArray();
         }
 
-        int rowIndex = 0;
-        int columnIndex = 0;
-
         for (int r = 0; r < matrix.length; r++) {
             for (int c = 0; c < matrix[r].length; c++) {
+                char currentChar = matrix[r][c];
 
-                if (matrix[r][c] == 'q') {
-                    rowIndex = r;
-                    columnIndex = c;
-                    if (validPosition(matrix, rowIndex, columnIndex)) {
-                        System.out.println(rowIndex + " " + columnIndex);
+                if (currentChar == 'q') {
+                    if (validPosition(matrix, r, c)) {
+                        System.out.println(r + " " + c);
                     }
                 }
             }
         }
-
-
     }
 
     public static boolean validPosition(char[][] matrix, int rowIndex, int columnIndex) {
@@ -36,15 +30,26 @@ public class T07_FindTheRealQueen {
         int newRowIndex = rowIndex;
         int newColumnIndex = columnIndex;
 
-        while (rowIndexIsLegit(matrix, newRowIndex - 1)) {
-
-            if (matrix[newRowIndex - 1][columnIndex] == 'q') {
+        int count = 0;
+        for (int r = 0; r < matrix.length; r++) {
+            if (matrix[r][columnIndex] == 'q') {
+                count++;
+            }
+            if (count > 1) {
                 return false;
-            } else {
-                newRowIndex--;
             }
         }
-        newRowIndex = rowIndex;
+        count = 0;
+
+        for (int c = 0; c < matrix[0].length; c++) {
+            if (matrix[rowIndex][c] == 'q') {
+                count++;
+            }
+            if (count > 1) {
+                return false;
+            }
+        }
+
         while (rowIndexIsLegit(matrix, newRowIndex - 1) && columnIndexIsLegit(matrix, newColumnIndex + 1)) {
             if (matrix[newRowIndex - 1][newColumnIndex + 1] == 'q') {
                 return false;
@@ -55,14 +60,7 @@ public class T07_FindTheRealQueen {
         }
         newRowIndex = rowIndex;
         newColumnIndex = columnIndex;
-        while (columnIndexIsLegit(matrix, newColumnIndex + 1)) {
-            if (matrix[rowIndex][newColumnIndex + 1] == 'q') {
-                return false;
-            } else {
-                newColumnIndex++;
-            }
-        }
-        newColumnIndex = columnIndex;
+
         while (rowIndexIsLegit(matrix, newRowIndex + 1) && columnIndexIsLegit(matrix, newColumnIndex + 1)) {
             if (matrix[newRowIndex + 1][newColumnIndex + 1] == 'q') {
                 return false;
@@ -73,14 +71,7 @@ public class T07_FindTheRealQueen {
         }
         newRowIndex = rowIndex;
         newColumnIndex = columnIndex;
-        while (rowIndexIsLegit(matrix, newRowIndex + 1)) {
-            if (matrix[newRowIndex + 1][columnIndex] == 'q') {
-                return false;
-            } else {
-                newRowIndex++;
-            }
-        }
-        newRowIndex = rowIndex;
+
         while (rowIndexIsLegit(matrix, newRowIndex + 1) && columnIndexIsLegit(matrix, newColumnIndex - 1)) {
             if (matrix[newRowIndex + 1][newColumnIndex - 1] == 'q') {
                 return false;
@@ -91,14 +82,7 @@ public class T07_FindTheRealQueen {
         }
         newRowIndex = rowIndex;
         newColumnIndex = columnIndex;
-        while (columnIndexIsLegit(matrix, newColumnIndex - 1)) {
-            if (matrix[rowIndex][newColumnIndex - 1] == 'q') {
-                return false;
-            } else {
-                newColumnIndex--;
-            }
-        }
-        newColumnIndex = columnIndex;
+
         while (rowIndexIsLegit(matrix, newRowIndex - 1) && columnIndexIsLegit(matrix, newColumnIndex - 1)) {
             if (matrix[newRowIndex - 1][newColumnIndex - 1] == 'q') {
                 return false;
@@ -118,4 +102,5 @@ public class T07_FindTheRealQueen {
     public static boolean columnIndexIsLegit(char[][] matrix, int c) {
         return c + 1 < matrix[0].length && c - 1 >= 0;
     }
+
 }
