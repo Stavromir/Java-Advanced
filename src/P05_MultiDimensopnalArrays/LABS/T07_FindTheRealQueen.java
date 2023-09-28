@@ -1,5 +1,6 @@
 package P05_MultiDimensopnalArrays.LABS;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class T07_FindTheRealQueen {
@@ -9,7 +10,11 @@ public class T07_FindTheRealQueen {
         char[][] matrix = new char[8][8];
 
         for (int r = 0; r < 8; r++) {
-            matrix[r] = scanner.nextLine().replace(" ", "").toCharArray();
+            String[] arr = scanner.nextLine().split("\\s+");
+            for (int c = 0; c < arr.length; c++) {
+                char current = arr[c].charAt(0);
+                matrix[r][c] = current;
+            }
         }
 
         for (int r = 0; r < matrix.length; r++) {
@@ -18,7 +23,7 @@ public class T07_FindTheRealQueen {
 
                 if (currentChar == 'q') {
                     if (validPosition(matrix, r, c)) {
-                        System.out.println(r + " " + c);
+                        System.out.print(r + " " + c);
                     }
                 }
             }
@@ -96,11 +101,11 @@ public class T07_FindTheRealQueen {
 
     public static boolean rowIndexIsLegit(char[][] matrix, int r) {
 
-        return r - 1 >= 0 && r + 1 < matrix.length;
+        return r >= 0 && r < matrix.length;
     }
 
     public static boolean columnIndexIsLegit(char[][] matrix, int c) {
-        return c + 1 < matrix[0].length && c - 1 >= 0;
+        return c < matrix[0].length && c >= 0;
     }
 
 }
