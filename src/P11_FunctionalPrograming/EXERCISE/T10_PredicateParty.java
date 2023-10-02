@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class T10_PredicateParty {
     public static void main(String[] args) {
@@ -50,7 +49,7 @@ public class T10_PredicateParty {
         }
     }
 
-    public static Predicate<String> filter (String criteria, String token) {
+    public static Predicate<String> filter(String criteria, String token) {
         switch (criteria) {
             case "StartsWith":
                 return e -> e.startsWith(token);
