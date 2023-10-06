@@ -11,7 +11,7 @@ public class PokemonTrainerMain {
         Pokemon pokemon;
 
         Map<String, List<Pokemon>> trainersPokemon = new HashMap<>();
-        Map<String, List<Trainer>> trainers = new LinkedHashMap<>();
+        Map<String, Trainer> trainers = new LinkedHashMap<>();
 
         while (!input.equals("Tournament")) {
             String trainerName = input.split("\\s+")[0];
@@ -23,8 +23,8 @@ public class PokemonTrainerMain {
             trainersPokemon.putIfAbsent(trainerName, new ArrayList<>());
             trainersPokemon.get(trainerName).add(pokemon);
             trainer = new Trainer(trainerName);
-            trainers.putIfAbsent(trainerName, new ArrayList<>());
-            trainers.get(trainerName).add(trainer);
+            trainers.putIfAbsent(trainerName, trainer);
+            trainers.get(trainerName).setCollectOfPokemon(1);
             input = scanner.nextLine();
         }
         input = scanner.nextLine();
@@ -38,23 +38,43 @@ public class PokemonTrainerMain {
                     .stream()
                     .forEach(entry -> {
 
-                        entry.getValue().stream()
-                                .forEach(poke -> {
-                                    if (poke.checkElement(command)) {
+                        String trainerName = entry.getKey();
 
-                                    }
-                                });
+                        boolean containsPoke = entry.getValue().stream()
+                                .anyMatch(e -> e.checkElement(command));
+
+                        if (containsPoke) {
+                            trainers.get(trainerName).setNumOfBadges(1);
+                        } else {
+                            entry.getValue()
+                                    .stream()
+                                    .forEach(e -> {
+                                        int health = e.getHealth();
+                                        if (health > 0) {
+                                            e.setHealth(health - 10);
+                                        }
+                                    });
+                        }
                     });
-
-
-
-
-
             input = scanner.nextLine();
         }
 
+        trainersPokemon.entrySet()
+                        .stream()
+                                .forEach(entry -> {
+                                    String trainerName = entry.getKey();
+                                    List<Pokemon> poke = entry.getValue();
 
+                                    for (Pokemon pokemon1 : poke) {
+                                        if (pokemon1.deadPokemon()) {
+                                            trainers.get(trainerName).setCollectOfPokemon(-1);
+                                        }
+                                    }
+                                });
+
+        trainers.entrySet()
+                .stream()
+                .sorted((a, b) -> Integer.compare(b.getValue().getNumOfBadges(), a.getValue().getNumOfBadges()))
+                .forEach(e -> System.out.println(e.getValue().toString()));
     }
-
-
 }

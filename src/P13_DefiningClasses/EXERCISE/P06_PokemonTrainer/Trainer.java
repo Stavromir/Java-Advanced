@@ -16,7 +16,16 @@ public class Trainer {
         this.numOfBadges += numOfBadges;
     }
 
+    public int getNumOfBadges() {
+        return numOfBadges;
+    }
+
     public void setCollectOfPokemon(int collectOfPokemon) {
         this.collectOfPokemon += collectOfPokemon;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %d %d", this.trainerName, this.numOfBadges, this.collectOfPokemon);
     }
 }

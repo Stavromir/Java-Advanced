@@ -13,6 +13,18 @@ public class Pokemon {
     }
 
     public boolean checkElement (String element) {
-        return this.element.equals(element);
+        return this.element.equals(element) && this.health > 0;
+    }
+
+    public boolean deadPokemon () {
+        return this.health <= 0;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }
