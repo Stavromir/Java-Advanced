@@ -1,88 +1,145 @@
 package P13_DefiningClasses.EXERCISE.P07_GOOGLE;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Person {
+    private Company company;
+    private List<Pokemon> pokemon;
+    private List<Parent> parent;
+    private List<Children> children;
+    private Car car;
 
-    public String name;
+    private class Company {
 
-    public Person(String name) {
-        this.name = name;
-    }
+        private String companyName;
+        private String department;
+        private double salary;
 
-    public static class Company {
-        public String companyName;
-        public String department;
-        public String salary;
-
-        public Company(String companyName, String department, String salary) {
+        private Company(String companyName, String department, double salary) {
             this.companyName = companyName;
             this.department = department;
             this.salary = salary;
         }
 
-        @Override
-        public String toString() {
-            return String.format("Company:%n" + "%s %s %s%n", this.companyName, this.department, this.salary);
+        private void printCompany() {
+            System.out.printf("%s %s %.2f%n", this.companyName, this.department, this.salary);
         }
     }
 
+    private static class Pokemon {
+        private String pokemonName;
+        private String pokemonType;
 
-    public static class Pokemon {
-        public String pokemonName;
-        public String pokemonType;
-
-        public Pokemon(String pokemonName, String pokemonType) {
+        private Pokemon(String pokemonName, String pokemonType) {
             this.pokemonName = pokemonName;
             this.pokemonType = pokemonType;
         }
-
-        @Override
-        public String toString() {
-            return String.format("Pokemon:%n" + "%s %s%n", this.pokemonName, this.pokemonType);
+        private void printPokemon() {
+            System.out.printf("%s %s%n", this.pokemonName, this.pokemonType);
         }
     }
 
-    public static class Parent {
-        public String parentName;
-        public String parentBirthday;
+    private static class Parent {
 
-        public Parent(String parentName, String parentBirthday) {
+        private String parentName;
+        private String parentBirthday;
+
+        private Parent(String parentName, String parentBirthday) {
             this.parentName = parentName;
             this.parentBirthday = parentBirthday;
         }
 
-        @Override
-        public String toString() {
-            return String.format("Parent:%n" + "%s %s%n", this.parentName, this.parentBirthday);
+        private void printParent() {
+            System.out.printf("%s %s%n", this.parentName, this.parentBirthday);
         }
     }
 
-    public class Children {
-        public String childName;
-        public String childBirthday;
+    private class Children {
+        private String childName;
+        private String childBirthday;
 
-        public Children(String childName, String childBirthday) {
+        private Children(String childName, String childBirthday) {
             this.childName = childName;
             this.childBirthday = childBirthday;
         }
 
-        @Override
-        public String toString() {
-            return String.format("Children:%n" + "%s %s%n", this.childName, this.childBirthday);
+        private void printChild() {
+            System.out.printf("%s %s%n", this.childName, this.childBirthday);
         }
     }
 
-    public static class Car {
+    private class Car {
         public String carModel;
         public String carSpeed;
 
-        public Car(String carModel, String carSpeed) {
+        private Car(String carModel, String carSpeed) {
             this.carModel = carModel;
             this.carSpeed = carSpeed;
         }
-
-        @Override
-        public String toString() {
-            return String.format("Car:%n" + "%s %s%n", this.carSpeed, this.carSpeed);
+        private void printCar() {
+            System.out.printf("%s %s%n", this.carModel, this.carSpeed);
         }
+    }
+
+    public void setCompany(String companyName, String department, double salary) {
+        this.company = new Company(companyName, department, salary);
+    }
+
+    public void setPokemon(String pokemonName, String pokemonType) {
+        if (this.pokemon == null) {
+            this.pokemon = new ArrayList<>();
+            this.pokemon.add(new Pokemon(pokemonName, pokemonType));
+        } else {
+            this.pokemon.add(new Pokemon(pokemonName, pokemonType));
+        }
+    }
+
+    public void setParent(String parentName, String parentBirthday) {
+        if (this.parent == null) {
+            this.parent = new ArrayList<>();
+            this.parent.add(new Parent(parentName, parentBirthday));
+        } else {
+            this.parent.add(new Parent(parentName, parentBirthday));
+        }
+    }
+
+    public void setChildren(String childName, String childBirthday) {
+        if (this.children == null) {
+            this.children = new ArrayList<>();
+            this.children.add(new Children(childName, childBirthday));
+        } else  {
+            this.children.add(new Children(childName, childBirthday));
+        }
+    }
+
+    public void setCar(String carModel, String carSpeed) {
+        this.car = new Car(carModel, carSpeed);
+    }
+
+    public void printInfo () {
+        System.out.println("Company:");
+        if (this.company != null) {
+            this.company.printCompany();
+        }
+        System.out.println("Car:");
+        if (this.car != null) {
+            this.car.printCar();
+        }
+        System.out.println("Pokemon:");
+        if (this.pokemon != null) {
+            this.pokemon.forEach(Pokemon::printPokemon);
+        }
+        System.out.println("Parents:");
+        if (this.parent != null) {
+            this.parent.forEach(Parent::printParent);
+        }
+        System.out.println("Children:");
+        if (this.children != null) {
+            this.children.forEach(Children::printChild);
+        }
+
+
     }
 }

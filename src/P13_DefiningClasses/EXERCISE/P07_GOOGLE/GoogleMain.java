@@ -1,16 +1,15 @@
 package P13_DefiningClasses.EXERCISE.P07_GOOGLE;
 
-import P13_DefiningClasses.EXERCISE.P06_PokemonTrainer.Pokemon;
-
-import java.util.Scanner;
+import java.util.*;
 
 public class GoogleMain {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        String input = scanner.toString();
+        String input = scanner.nextLine();
 
-        Person person;
+        Map<String, Person> personInfo = new LinkedHashMap<>();
+
 
         while (!input.equals("End")) {
 
@@ -20,30 +19,28 @@ public class GoogleMain {
             String about = inputArr[1];
             String tokenOne = inputArr[2];
             String tokenTwo = inputArr[3];
+            Person person = new Person();
+            personInfo.putIfAbsent(personName, person);
 
-            switch (about) {
-                case "company":
-                    String tokenThree = inputArr[4];
-
-                    Person.Company companyInfo = new Person.Company(tokenOne, tokenTwo, tokenThree);
-
-                    break;
-
-
-                case "car":
-                    person = new Person(personName);
-                    Person.Car carInfo = new Person.Car(tokenOne, tokenTwo);
-                    System.out.println(person.toString());
-                    System.out.println();
-                    break;
+            if (about.equals("company")) {
+                double tokenThree = Double.parseDouble(inputArr[4]);
+                personInfo.get(personName).setCompany(tokenOne, tokenTwo, tokenThree);
+            } else if (about.equals("pokemon")) {
+                personInfo.get(personName).setPokemon(tokenOne, tokenTwo);
+            } else if (about.equals("parents")) {
+                personInfo.get(personName).setParent(tokenOne, tokenTwo);
+            } else if (about.equals("children")) {
+                personInfo.get(personName).setChildren(tokenOne, tokenTwo);
+            } else if (about.equals("car")) {
+                personInfo.get(personName).setCar(tokenOne, tokenTwo);
             }
-
-
-
-
 
             input = scanner.nextLine();
         }
 
+        input = scanner.nextLine();
+
+        System.out.println(input);
+        personInfo.get(input).printInfo();
     }
 }
