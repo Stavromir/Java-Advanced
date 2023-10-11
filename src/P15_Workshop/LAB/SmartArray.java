@@ -1,33 +1,33 @@
 package P15_Workshop.LAB;
 
-import java.util.Scanner;
 import java.util.function.Consumer;
 
-public class SmartArray {
+public class SmartArray<T> {
 
-    private int[] data;
+    private Object[] data;
     private int index;
 
     public SmartArray() {
-        this.data = new int[2];
+        this.data = new Object[2];
         this.index = 0;
     }
 
-    public void add(int element) {
-        if (this.data.length == index) {
+    public void add(T element) {
+        if (data.length == index) {
             data = resize(data.length * 2);
         }
-        this.data[index] = element;
+        data[index] = element;
         index++;
     }
 
-    public int get(int index) {
-        return this.data[index];
+    @SuppressWarnings("unchecked")
+    public T get(int index) {
+        return (T) this.data[index];
     }
 
     public void remove(int index) {
 
-        int[] newData = new int[this.data.length];
+        Object[] newData = new Object[data.length];
 
         if (index == 0) {
             System.arraycopy(data, 1, newData, 0, this.index - 1);
@@ -39,9 +39,11 @@ public class SmartArray {
         this.index--;
     }
 
-    public boolean contains (int element) {
+
+    @SuppressWarnings("unchecked")
+    public boolean contains(T element) {
         for (int i = 0; i < index; i++) {
-            int currentElement = data[i];
+            T currentElement = (T) data[i];
             if (currentElement == element) {
                 return true;
             }
@@ -49,29 +51,30 @@ public class SmartArray {
         return false;
     }
 
-    public void add (int index, int element) {
-        int[] newData = new int[data.length];
+    public void add(int index, T element) {
+        Object[] newData = new Object[data.length];
 
         if (index == 0) {
             newData[0] = element;
             System.arraycopy(data, 0, newData, 1, this.index);
         } else {
             System.arraycopy(data, 0, newData, 0, index);
-            System.arraycopy(data, index, newData, index + 1, this.index - index );
+            System.arraycopy(data, index, newData, index + 1, this.index - index);
             newData[index] = element;
         }
         data = newData;
         this.index++;
     }
 
-    public void forEach (Consumer<Integer> consumer) {
+    @SuppressWarnings("unchecked")
+    public void forEach(Consumer<T> consumer) {
         for (int i = 0; i < index; i++) {
-            consumer.accept(data[i]);
+            consumer.accept((T)data[i]);
         }
     }
 
-    private int[] resize(int newSize) {
-        int[] newData = new int[newSize];
+    private Object[] resize(int newSize) {
+        Object[] newData = new Object[newSize];
 
         System.arraycopy(data, 0, newData, 0, index);
 

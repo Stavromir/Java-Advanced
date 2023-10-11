@@ -5,6 +5,9 @@ public class WorkLabMain {
 
 
         SmartStack smartStack = new SmartStack();
+        SmartArray<String> newSmartArr = new SmartArray<>();
+
+        newSmartArr.add("fff");
 
         smartStack.push(1);
         smartStack.push(2);
